@@ -1,9 +1,10 @@
-/**
- * sortStrings - sorts array of string by two criteria "asc" or "desc"
- * @param {string[]} arr - the array of strings
- * @param {string} [param="asc"] param - the sorting type "asc" or "desc"
- * @returns {string[]}
- */
-export function sortStrings(arr, param = 'asc') {
 
+export function sortStrings(arr, param) {
+  let result = arr.slice(0, arr.length+1)
+	result.sort((a, b) => a.localeCompare(b, 'ru-RU-u-kf-upper'));
+	(param == 'asc') ? result :
+	(param == 'desc') ? result.reverse() :
+	 result
+	return result;
 }
+
