@@ -5,7 +5,7 @@
  * @returns {object} - returns the new object
  */
 export const omit = (obj, ...fields) => {
-  let newObj = {...obj};
+  const newObj = {...obj};
   for (const key in fields) {
     delete newObj[fields[key]];
   }
