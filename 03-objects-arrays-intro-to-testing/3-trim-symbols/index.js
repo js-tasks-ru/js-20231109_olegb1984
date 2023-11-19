@@ -32,6 +32,3 @@ export function trimSymbols(string, size) {
   }
   return newString;
 }
-
-
-//console.log(trimSymbols("ddddssffssdd", 3));
