@@ -6,7 +6,6 @@
 export function createGetter(path) {
   const keys = path.split('.');
   return (obj) => {
-   // вынести за функцию
     for (const i in keys) {
       if (!obj.hasOwnProperty(keys[i])) {
         return;
