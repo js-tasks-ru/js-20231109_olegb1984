@@ -2,11 +2,10 @@ export default class NotificationMessage {
 
   static currentNotification = null;
 
-  constructor(notification = '', {duration = '', type = '', target = ''} = {}) {
+  constructor(notification = '', {duration = '', type = ''} = {}) {
     this.notification = notification;
     this.duration = duration;
     this.type = type;
-    this.target = target;
     this.element = this.createElement(this.createTemplate());
   }
 
