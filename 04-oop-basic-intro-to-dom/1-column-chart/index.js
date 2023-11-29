@@ -8,12 +8,12 @@ export default class ColumnChart {
     this.link = link;
     this.value = formatHeading(value);
     this.element = this.createElement(this.createTemplate());
-    this.loadTemplateData();
+    this.toggleLoaderStatus();
   }
 
-  createElement(tag) {
+  createElement(template) {
     const element = document.createElement("div");
-    element.innerHTML = tag;
+    element.innerHTML = template;
     return element.firstElementChild;
   }
 
@@ -33,7 +33,7 @@ export default class ColumnChart {
 `;
   }
 
-  loadTemplateData = () => {
+  toggleLoaderStatus = () => {
     const isDataEmpty = this.data.length === 0;
     this.element.classList.toggle('column-chart_loading', isDataEmpty);
   }
@@ -54,7 +54,7 @@ export default class ColumnChart {
 
     columnChartBody.innerHTML = this.renderTemplate();
 
-    this.loadTemplateData();
+    this.toggleLoaderStatus();
   }
 
   remove = () => {
