@@ -35,11 +35,11 @@ export default class SortableTable {
   }
 
   createBodyTemplate() {
-    return `<div data-element="body" class="sortable-table__body">${this.createRowTemplate()}</div>`;
+    return `<div data-element="body" class="sortable-table__body">${this.createRowsTemplate()}</div>`;
   }
 
-  createRowTemplate(data = this.data) {
-    return data.map((item) => `<a href="/products/${item.id}" class="sortable-table__row">${this.createCellTemplate(item)}</a>`).join('');
+  createRowsTemplate() {
+    return this.data.map((item) => `<a href="/products/${item.id}" class="sortable-table__row">${this.createCellTemplate(item)}</a>`).join('');
   }
 
   createCellTemplate = (item) => {
@@ -51,29 +51,24 @@ export default class SortableTable {
   }
 
   sort(field, order) {
-    const sortedType = order === "asc" ? 1 : -1;
-    const fields = Array.prototype.slice.call(this.subElements.header.children);
-    const elem = this.subElements.header.querySelector(`[data-id="${field}"]`);
-    const index = fields.indexOf(elem);
-    const sortedTable = [...this.subElements.body.children];
-
-    const sortingAsc = (a, b) => a.children[index].textContent.localeCompare(b.children[index].textContent, ["ru", "en"], {
-      numeric: true,
-      caseFirst: "upper"
-    });
-    const sortingDesc = (a, b) => b.children[index].textContent.localeCompare(a.children[index].textContent, ["ru", "en"], {
-      numeric: true,
-      caseFirst: "upper"
-    });
-
-    sortedTable.sort(order === 'desc' ? sortingDesc : sortingAsc)
-
-    this.updateTable(sortedTable);
+    this.sortData(field, order);
+    this.updateTable();
   }
 
-  updateTable(sortedTable) {
-    this.subElements.body.innerHTML = '';
-    this.subElements.body.append(...sortedTable);
+  sortData(field, order) {
+    const sortingAsc = (a, b) => a[field].toString().localeCompare(b[field].toString(), ["ru", "en"], {
+      numeric: true,
+      caseFirst: "upper"
+    });
+    const sortingDesc = (a, b) => b[field].toString().localeCompare(a[field].toString(), ["ru", "en"], {
+      numeric: true,
+      caseFirst: "upper"
+    });
+    return this.data.sort(order === 'desc' ? sortingDesc : sortingAsc);
+  }
+
+  updateTable() {
+    this.subElements.body.innerHTML = this.createRowsTemplate()
   }
 
   remove = () => {
