@@ -1,4 +1,4 @@
-export default class SortableTable {
+export default class SortableTableBase {
   constructor(headerConfig = [], data = []) {
 
     this.headerConfig = headerConfig;
@@ -31,7 +31,10 @@ export default class SortableTable {
   createHeaderTemplate() {
     return this.headerConfig.map(({id, title, sortable}) =>
       `<div class="sortable-table__cell" data-id="${id}" data-sortable="${sortable}">
-      <span>${title}</span></div>`).join('');
+      <span>${title}</span>
+      ${this.createLinkTemplate(sortable)}
+      </div>`)
+      .join('');
   }
 
   createBodyTemplate() {
@@ -48,6 +51,14 @@ export default class SortableTable {
         : `<div class="sortable-table__cell">${item[key.id]}</div>`;
     })
       .join('');
+  }
+
+  createLinkTemplate(sortable) {
+    return sortable
+      ? `<span data-element="arrow" class="sortable-table__sort-arrow">
+          <span class="sort-arrow"></span>
+        </span>`
+      : "";
   }
 
   sort(field, order) {
